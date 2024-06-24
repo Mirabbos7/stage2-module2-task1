@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Set;
 
 @WebServlet("/add")
 public class AddUserServlet {
@@ -17,6 +18,11 @@ public class AddUserServlet {
             Warehouse.getInstance().addUser(user);
         }
         req.getRequestDispatcher("webapp/jsp/add.jsp").forward(req, resp);
+    }
+    protected void doGet(HttpServletResponse response, HttpServletRequest request){
+        Set<User> users = Warehouse.getInstance().getUsers();
+        request.setAttribute("User", users);
+        request.getRequestDispatcher("webapp/jsp/users.jsp");
     }
 
 }
