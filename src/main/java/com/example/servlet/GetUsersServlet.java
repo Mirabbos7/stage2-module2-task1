@@ -3,16 +3,22 @@ package com.example.servlet;
 import com.example.User;
 import com.example.Warehouse;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Set;
 
 @WebServlet("/users")
-public class GetUsersServlet {
-    protected void doGet(HttpServletResponse response, HttpServletRequest request){
+public class GetUsersServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Set<User> users = Warehouse.getInstance().getUsers();
-        request.setAttribute("User", users);
-        request.getRequestDispatcher("webapp/jsp/users.jsp");
+        req.setAttribute("users", users);
+        req.getRequestDispatcher("src/main/webapp/jsp/users.jsp").forward(req, resp);
     }
 }
